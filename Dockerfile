@@ -1,4 +1,4 @@
-FROM 1and1internet/ubuntu-16-apache-2.4:unstable
+FROM 1and1internet/ubuntu-16-apache-2.4:latest
 MAINTAINER james.wilkins@fasthosts.co.uk
 ARG DEBIAN_FRONTEND=noninteractive
 COPY files /
@@ -10,6 +10,7 @@ RUN \
   mv composer.phar /usr/local/bin/composer && \
   chmod a+x /usr/local/bin/composer && \
   rm -rf /tmp/* && \
+  mkdir -m 777 /tmp/sockets && \
   rm -rf /var/lib/apt/lists/* && \
   chmod -R 755 /hooks /init
 EXPOSE 8080
