@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    description: 1&1 Apache 2.4 & PHP 7
+  creationTimestamp: null
+  name: ubuntu-16-apache-2.4-php-7.0
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Exposes and load balances the application pods
+    name: apache
+  spec:
+    ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+    selector:
+      name: ${APP_SERVICE_NAME}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: ${APP_SERVICE_NAME}
+  spec:
+    host: ${APPLICATION_DOMAIN}
+    to:
+      kind: Service
+      name: ${APP_SERVICE_NAME}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      description: Definition for deploying Apache
+    labels:
+      service: ubuntu-16-apache-2.4-php-7.0
+    name: ${APP_SERVICE_NAME}
+  spec:
+    replicas: 1
+    selector:
+      name: ${APP_SERVICE_NAME}
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          test: 'Where does this value end up? #196'
+        labels:
+          name: ${APP_SERVICE_NAME}
+          service: ubuntu-16-apache-2.4-php-7.0
+        name: ${APP_SERVICE_NAME}
+      spec:
+        containers:
+        - env:
+          image: 1and1internet/ubuntu-16-apache-2.4-php-7.0
+          imagePullPolicy: Always
+          name: ${APP_SERVICE_NAME}
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            mountPath: /var/www/html
+            name: apache-data
+        volumes:
+        - emptyDir:
+            medium: ""
+          name: apache-data
+    triggers:
+    - type: ConfigChange
+parameters:
+- description: Size of Storage
+  displayName: Web directory size
+  name: VOLUME_CAPACITY
+  required: true
+  value: 5Gi
+- description: Application service name
+  displayName: Application service name
+  name: APP_SERVICE_NAME
+  required: true
+  from: apache-[a-z]{5}
+  generate: expression
+- description: The exposed hostname that will route to the Apache Server, if left
+    blank a value will be defaulted.
+  displayName: Application Hostname
+  name: APPLICATION_DOMAIN
+
