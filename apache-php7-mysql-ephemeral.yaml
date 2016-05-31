@@ -89,7 +89,7 @@ objects:
       port: 3306
       protocol: TCP
       targetPort: 3306
-    - name: phpmyadmin
+    - name: web
       port: 8080
       targetPort: 8080
       protocol: TCP
@@ -99,6 +99,14 @@ objects:
     type: ClusterIP
   status:
     loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: ${DATABASE_SERVICE_NAME}
+  spec:
+    to:
+      kind: Service
+      name: ${DATABASE_SERVICE_NAME}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -184,6 +192,11 @@ parameters:
   displayName: Service Name for MySQL
   name: DATABASE_SERVICE_NAME
   required: true
+  value: mysql
+- description: The exposed hostname that will route to the Apache Server, if left
+    blank a value will be defaulted.
+  displayName: Database Application Hostname
+  name: DATABASE_APPLICATION_DOMAIN
   value: mysql
 - description: Maximum amount of memory the database container can use.
   displayName: Memory Limit
