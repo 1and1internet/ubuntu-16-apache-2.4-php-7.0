@@ -5,9 +5,9 @@ labels:
 metadata:
   name: apache-php7-mysql-ephemeral
   annotations:
-    description: "Apache 2.4 with PHP 7 and MySQL"
+    description: "Apache 2.4 with PHP 7, MySQL and phpMyAdmin"
     iconClass: "icon-php"
-    tags: "apache,php,php7,mysql"
+    tags: "apache,php,php7,database,mysql,phpmyadmin"
 objects:
 - apiVersion: v1
   kind: Service
@@ -78,7 +78,7 @@ objects:
   kind: Service
   metadata:
     creationTimestamp: null
-    name: ${DATABASE_SERVICE_NAME}
+    name: ${DATABASE_SERVICE_NAME}_and_phpmyadmin
   spec:
     portalIP: ""
     ports:
@@ -87,6 +87,10 @@ objects:
       port: 3306
       protocol: TCP
       targetPort: 3306
+    - name: phpmyadmin
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
     selector:
       name: ${DATABASE_APP_SERVICE_NAME}
     sessionAffinity: None
