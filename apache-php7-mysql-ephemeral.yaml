@@ -193,11 +193,6 @@ parameters:
   name: DATABASE_SERVICE_NAME
   required: true
   value: mysql
-- description: The exposed hostname that will route to the Apache Server, if left
-    blank a value will be defaulted.
-  displayName: Database Application Hostname
-  name: DATABASE_APPLICATION_DOMAIN
-  value: mysql
 - description: Maximum amount of memory the database container can use.
   displayName: Memory Limit
   name: MEMORY_LIMIT
