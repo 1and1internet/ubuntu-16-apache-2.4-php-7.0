@@ -177,3 +177,7 @@ parameters:
   name: DATABASE_SERVICE_NAME
   required: true
   value: mysql
+- description: Maximum amount of memory the database container can use.
+  displayName: Memory Limit
+  name: MEMORY_LIMIT
+  value: 512Mi
