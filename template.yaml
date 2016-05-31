@@ -3,7 +3,7 @@ kind: Template
 labels:
     template: apache-php7-mysql-template
 metadata:
-  name: apache-php7-mysql
+  name: apache-php7-mysql-ephemeral
   annotations:
     description: "Apache 2.4 with PHP 7 and MySQL"
     iconClass: "icon-php"
@@ -30,7 +30,50 @@ objects:
     host: ${APPLICATION_DOMAIN}
     to:
       kind: Service
-      name: ${APP_SERVICE_NAME}l
+      name: ${APP_SERVICE_NAME}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      description: Definition for deploying Apache
+    labels:
+      service: apache-2.4
+    name: ${APP_SERVICE_NAME}
+  spec:
+    replicas: 1
+    selector:
+      name: ${APP_SERVICE_NAME}
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          name: ${APP_SERVICE_NAME}
+          service: apache-2.4
+        name: ${APP_SERVICE_NAME}
+      spec:
+        containers:
+        - env:
+          image: 1and1internet/ubuntu-16-apache-2.4-php-7.0:unstable
+          imagePullPolicy: Always
+          livenessProbe:
+            initialDelaySeconds: 30
+            tcpSocket:
+                port: 8080
+            timeoutSeconds: 1
+          name: ${APP_SERVICE_NAME}
+          volumeMounts:
+          - mountPath: /var/www
+            name: apache-data
+        restartPolicy: Always
+        securityContext:
+          runAsUser: 1021400030
+        volumes:
+        - emptyDir:
+            medium: ""
+          name: apache-data
+    triggers:
+    - type: ConfigChange
 parameters:
 - description: Size of Storage
   displayName: Web directory size
