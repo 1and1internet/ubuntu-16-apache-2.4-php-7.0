@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Template
+labels:
+    template: apache-php7-mysql-template
+metadata:
+  name: apache-php7-mysql
+  annotations:
+    description: "Apache 2.4 with PHP 7 and MySQL"
+    iconClass: "icon-php"
+    tags: "apache,php,php7,mysql"
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Apache 2.4
+    name: ${APP_SERVICE_NAME}
+  spec:
+    ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+    selector:
+      name: ${APP_SERVICE_NAME}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: ${APP_SERVICE_NAME}
+  spec:
+    host: ${APPLICATION_DOMAIN}
+    to:
+      kind: Service
+      name: ${APP_SERVICE_NAME}l
+parameters:
+- description: Size of Storage
+  displayName: Web directory size
+  name: VOLUME_CAPACITY
+  required: true
+  value: 5Gi
+- description: Application service name
+  displayName: Application service name
+  name: APP_SERVICE_NAME
+  required: true
+  from: apache-[a-z]{5}
+  generate: expression
+- description: The exposed hostname that will route to the Apache Server, if left
+    blank a value will be defaulted.
+  displayName: Application Hostname
+  name: APPLICATION_DOMAIN
