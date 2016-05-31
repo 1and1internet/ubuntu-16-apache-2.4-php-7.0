@@ -67,7 +67,7 @@ objects:
             name: apache-data
         restartPolicy: Always
         securityContext:
-          runAsUser: 1021400030
+          runAsUser: 1000550030
         volumes:
         - emptyDir:
             medium: ""
@@ -125,6 +125,8 @@ objects:
           image: 1and1internet/ubuntu-16-nginx-1.10.0-php-7.0-phpmyadmin-4.6-mysql-5.7:unstable
           imagePullPolicy: Always
           name: ${APP_SERVICE_NAME}
+        securityContext:
+          runAsUser: 1000550040
     triggers:
     - type: ConfigChange
 parameters:
