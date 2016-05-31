@@ -77,8 +77,10 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
+    annotations:
+      description: MySQL and phpMyAdmin
     creationTimestamp: null
-    name: ${DATABASE_SERVICE_NAME}_and_phpmyadmin
+    name: ${DATABASE_SERVICE_NAME}
   spec:
     portalIP: ""
     ports:
