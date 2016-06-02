@@ -165,11 +165,6 @@ parameters:
     blank a value will be defaulted.
   displayName: Application Hostname
   name: APPLICATION_DOMAIN
-- description: Size of Database Storage
-  displayName: DB directory size
-  name: DATABASE_VOLUME_CAPACITY
-  required: true
-  value: 5Gi
 - description: Database application service name
   displayName: Database application service name
   from: mysql-[0-9]{5}
@@ -184,13 +179,13 @@ parameters:
   required: true
 - description: MySQL Password
   displayName: Password for MySQL
-  from: '[a-zA-Z0-9]{4}'
+  from: '[a-zA-Z0-9]{10}'
   generate: expression
   name: MYSQL_PASSWORD
   required: true
 - description: MySQL Root Password
-  displayName: Password for MySQL Root User
-  from: '[a-zA-Z0-9]{4}'
+  displayName: Password for MySQL Root/Administrator User
+  from: '[a-zA-Z0-9]{16}'
   generate: expression
   name: MYSQL_ROOT_PASSWORD
   required: true
