@@ -7,7 +7,7 @@ metadata:
   annotations:
     description: "Apache 2.4 with PHP 7, MySQL and phpMyAdmin"
     iconClass: "icon-php"
-    tags: "apache,php,php7,database,mysql,phpmyadmin"
+    tags: "quickstart,php,database"
 objects:
 - apiVersion: v1
   kind: Service
@@ -63,11 +63,11 @@ objects:
             timeoutSeconds: 1
           name: ${APP_SERVICE_NAME}
           volumeMounts:
-          - mountPath: /var/www
+          - mountPath: /var/www/html
             name: apache-data
         restartPolicy: Always
         securityContext:
-          runAsUser: 1000550030
+          runAsUser: ${OPENSHIFT_USER}
         volumes:
         - emptyDir:
             medium: ""
@@ -104,11 +104,13 @@ objects:
   metadata:
     name: ${DATABASE_SERVICE_NAME}
   spec:
+    host: ${DATABASE_ADMIN_DOMAIN}
     to:
       kind: Service
       name: ${DATABASE_SERVICE_NAME}
     port:
       targetPort: 8080
+      protocol: TCP
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -141,16 +143,18 @@ objects:
           image: 1and1internet/ubuntu-16-nginx-1.10.0-php-7.0-phpmyadmin-4.6-mysql-5.7:unstable
           imagePullPolicy: Always
           name: ${APP_SERVICE_NAME}
+        resources:
+          limits:
+            memory: ${MEMORY_LIMIT}
         securityContext:
-          runAsUser: 1000550040
+          runAsUser: ${OPENSHIFT_USER}
+        volumes:
+        - emptyDir:
+            medium: ""
+          name: ${DATABASE_SERVICE_NAME}-data
     triggers:
     - type: ConfigChange
 parameters:
-- description: Size of Storage
-  displayName: Web directory size
-  name: VOLUME_CAPACITY
-  required: true
-  value: 5Gi
 - description: Application service name
   displayName: Application service name
   name: APP_SERVICE_NAME
@@ -195,7 +199,11 @@ parameters:
   name: DATABASE_SERVICE_NAME
   required: true
   value: mysql
-- description: Maximum amount of memory the database container can use.
-  displayName: Memory Limit
-  name: MEMORY_LIMIT
-  value: 512Mi
+- description: Database Admin URL
+  displayname: Database Admin URL
+  name: DATABASE_ADMIN_DOMAIN
+  required: true
+- description: Openshift User
+  displayname: Openshift User
+  name: OPENSHIFT_USER
+  required: true
