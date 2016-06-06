@@ -173,7 +173,7 @@ parameters:
   required: true
 - description: MySQL Username
   displayName: Username for MySQL
-  from: user[A-Z0-9]{3}
+  from: user[A-Z0-9]{4}
   generate: expression
   name: MYSQL_USER
   required: true
