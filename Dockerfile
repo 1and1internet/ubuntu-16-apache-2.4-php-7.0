@@ -1,4 +1,4 @@
-FROM 1and1internet/ubuntu-16-apache-2.4:latest
+FROM 1and1internet/ubuntu-16-apache:latest
 MAINTAINER james.wilkins@fasthosts.co.uk
 ARG DEBIAN_FRONTEND=noninteractive
 COPY files /
