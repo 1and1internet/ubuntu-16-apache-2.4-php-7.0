@@ -9,8 +9,15 @@ RUN \
   curl -sS https://getcomposer.org/installer | php && \
   mv composer.phar /usr/local/bin/composer && \
   chmod a+x /usr/local/bin/composer && \
-  rm -rf /tmp/* && \
-  mkdir -m 777 /tmp/sockets && \
+  cd / && \
+  rm -rf /tmp/composer && \
+  apt-get remove -y python-software-properties software-properties-common && \
+  apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/* && \
-  chmod -R 755 /hooks /init
+  chmod 777 -R /var/www
+  
+  # rm -rf /tmp/* && \
+  # mkdir -m 777 /tmp/sockets && \
+  # rm -rf /var/lib/apt/lists/* && \
+  # chmod -R 755 /hooks /init
 EXPOSE 8080
