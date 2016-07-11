@@ -13,17 +13,11 @@ set :backend, :docker
 set :docker_image, @image.id
 #set :docker_debug, true
 set :docker_container_start_timeout, 30
-
- set :docker_container_create_options, {
-    'Image'      => @image.id,
-    'User'     => '100000',
-    # 'hostname' => 'snowflake',
-    'HostConfig'   => {
-      'PortBindings' => {
-        "#{LISTEN_PORT}/tcp" => [ { 'HostPort' => "#{LISTEN_PORT}" } ]
-      }
+set :docker_container_ready_regex, /READY/
+set :docker_container_create_options, {
+      'Image'      => @image.id,
+      'User'     => '100000',
     }
-  }
 
 RSpec.configure do |c|
 
