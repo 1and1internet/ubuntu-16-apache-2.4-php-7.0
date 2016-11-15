@@ -3,7 +3,7 @@ MAINTAINER james.wilkins@fasthosts.co.uk
 ARG DEBIAN_FRONTEND=noninteractive
 RUN \
   apt-get update && \
-  apt-get install -y libapache2-mod-php7.0 php7.0-cli php7.0-common php7.0-curl php7.0-gd php7.0-mysql php7.0-sqlite php7.0-xml php7.0-zip php7.0-mbstring php7.0-mcrypt php7.0-intl php7.0-soap && \
+  apt-get install -y libapache2-mod-php7.0 php7.0-cli php7.0-common php7.0-curl php7.0-gd php7.0-mysql php7.0-sqlite php7.0-xml php7.0-zip php7.0-mbstring php7.0-mcrypt php7.0-intl php7.0-soap php7.0-imap php7.0-bcmath php7.0-bz2 php7.0-dba php7.0-tidy && \
   sed -i -e 's/max_execution_time = 30/max_execution_time = 360/g' /etc/php/7.0/apache2/php.ini && \
   sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' /etc/php/7.0/apache2/php.ini && \
   sed -i -e 's/DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm/DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm/g' /etc/apache2/mods-available/dir.conf && \
