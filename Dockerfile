@@ -29,4 +29,3 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
   chmod 777 -R /var/www && \
   apache2ctl -t
-EXPOSE 8080
