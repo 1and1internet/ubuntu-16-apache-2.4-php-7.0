@@ -1,4 +1,4 @@
-FROM 1and1internet/ubuntu-16-apache:latest
+FROM 1and1internet/ubuntu-16-apache
 MAINTAINER brian.wojtczak@1and1.co.uk
 ARG DEBIAN_FRONTEND=noninteractive
 COPY files /
@@ -26,9 +26,4 @@ RUN \
   apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/* && \
   chmod 777 -R /var/www
-
-  # rm -rf /tmp/* && \
-  # mkdir -m 777 /tmp/sockets && \
-  # rm -rf /var/lib/apt/lists/* && \
-  # chmod -R 755 /hooks /init
 EXPOSE 8080
