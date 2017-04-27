@@ -1,0 +1,10 @@
+version: '2'
+services:
+  ubuntu-16-apache-php-7.0:
+    user: "1000000"
+    hostname: apache-php-7.0
+    container_name: apache-php-7.0
+    build: .
+    image: ubuntu-16-apache-php-7.0
+    ports:
+      - "8080:8080"
