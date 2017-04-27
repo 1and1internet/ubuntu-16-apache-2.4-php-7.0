@@ -23,7 +23,7 @@ docker run -u ${UID}:0 -p ${PORT}:8080 -v ${WEB_ROOT}:/var/www/ 1and1internet/ub
 
 ## Building and testing
 
-A simple Makefile is included for your convience. It assumes a linux environment with a docker socket avialable at `/var/run/docker.sock`
+A simple Makefile is included for your convience. It assumes a linux environment with a docker socket available at `/var/run/docker.sock`
 
 To build and test just run `make`.
 You can also just `make pull`, `make build` and `make test` separately.
