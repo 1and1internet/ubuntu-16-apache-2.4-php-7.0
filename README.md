@@ -10,7 +10,7 @@ Please consult [the official PHP site](http://php.net/supported-versions.php) to
 
 ## Usage
 
-Please note this image is explictly intended to be run as a non-privildged user. Ensure you specify a user id (UID) other than zero when you run it. Running as root will not function.
+Please note this image is explictly intended to be run as a non-privileged user. Ensure you specify a user id (UID) other than zero when you run it. Running as root will not function.
 
 
 ```bash
