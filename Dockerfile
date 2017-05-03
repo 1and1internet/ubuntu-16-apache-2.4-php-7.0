@@ -28,4 +28,6 @@ RUN \
   apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/* && \
   chmod 777 -R /var/www && \
-  apache2ctl -t
+  apache2ctl -t && \
+  mkdir -p /run /var/lib/apache2 /var/lib/php && \
+  chmod -R 777 /run /var/lib/apache2 /var/lib/php
