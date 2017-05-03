@@ -18,7 +18,8 @@ RUN \
     tar xfz /usr/src/tmp/ioncube_loaders_lin_x86-64.tar.gz -C /usr/src/tmp/ioncube && \
     cp /usr/src/tmp/ioncube/ioncube/ioncube_loader_lin_7.0.so /usr/lib/php/20151012/ && \
     rm -rf /usr/src/tmp/ && \
-    cd /tmp && \
+    mkdir /tmp/composer/ && \
+    cd /tmp/composer && \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer && \
