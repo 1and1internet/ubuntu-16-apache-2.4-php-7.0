@@ -33,4 +33,4 @@ RUN \
     chmod 777 -R /var/www && \
     apache2ctl -t && \
     mkdir -p /run /var/lib/apache2 /var/lib/php && \
-    chmod -R 777 /run /var/lib/apache2 /var/lib/php
+    chmod -R 777 /run /var/lib/apache2 /var/lib/php /etc/php/7.0/apache2/php.ini
